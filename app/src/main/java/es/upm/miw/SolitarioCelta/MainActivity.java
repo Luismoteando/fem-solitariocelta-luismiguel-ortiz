@@ -2,6 +2,7 @@ package es.upm.miw.SolitarioCelta;
 
 import android.app.AlertDialog;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,10 +16,21 @@ import android.widget.RadioButton;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class MainActivity extends AppCompatActivity {
 
+    public static final String PARTIDA_GUARDADA = "partida.txt";
     SCeltaViewModel miJuego;
     public final String LOG_KEY = "MiW";
+
+    private FileOutputStream fileOutputStream;
+
+    private BufferedReader bufferedReader;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +110,12 @@ public class MainActivity extends AppCompatActivity {
                                 getString(R.string.txtDialogoReiniciarNegativo), null)
                         .show();
                 return true;
+            case R.id.opcGuardarPartida:
+                guardarPartida();
+                return true;
+            case R.id.opcRecuperarPartida:
+                recuperarPartida();
+                return true;
             case R.id.opcAjustes:
                 startActivity(new Intent(this, SCeltaPrefs.class));
                 return true;
@@ -113,5 +131,58 @@ public class MainActivity extends AppCompatActivity {
                 ).show();
         }
         return true;
+    }
+
+    private void guardarPartida() {
+        try {
+            fileOutputStream = openFileOutput(PARTIDA_GUARDADA, Context.MODE_PRIVATE);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            fileOutputStream.write(miJuego.serializaTablero().getBytes());
+            fileOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void recuperarPartida() {
+        final StringBuffer sb = new StringBuffer();
+        String line;
+        try {
+            bufferedReader = new BufferedReader(new InputStreamReader(openFileInput(PARTIDA_GUARDADA)));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            line = bufferedReader.readLine();
+            while (line != null) {
+                sb.append(line);
+                line = bufferedReader.readLine();
+            }
+            if (!sb.toString().equals(miJuego.serializaTablero())) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder
+                        .setTitle(R.string.txtDialogoRecuperarTitulo)
+                        .setMessage(R.string.txtDialogoRecuperarPregunta)
+                        .setPositiveButton(
+                                getString(R.string.txtDialogoRecuperarAfirmativo),
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        miJuego.deserializaTablero(sb.toString());
+                                        mostrarTablero();
+                                    }
+                                }
+                        )
+                        .setNegativeButton(
+                                getString(R.string.txtDialogoRecuperarNegativo), null)
+                        .show();
+            }
+            bufferedReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

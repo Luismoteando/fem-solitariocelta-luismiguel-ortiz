@@ -30,6 +30,10 @@
     <string name="txtDialogoReiniciarAfirmativo">Sí</string>
     <string name="txtDialogoReiniciarNegativo">No</string>
     <string name="txtDialogoReiniciarPregunta">¿Desea reiniciar el juego?</string>
+    <string name="txtDialogoRecuperarTitulo">Recuperar partida</string>
+    <string name="txtDialogoRecuperarPregunta">¿Desea sustituir la partida actual?</string>
+    <string name="txtDialogoRecuperarAfirmativo">Sí</string>
+    <string name="txtDialogoRecuperarNegativo">No</string>
 
 
 </resources>
