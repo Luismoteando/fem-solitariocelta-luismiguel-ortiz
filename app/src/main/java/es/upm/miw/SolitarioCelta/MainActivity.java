@@ -1,6 +1,8 @@
 package es.upm.miw.SolitarioCelta;
 
+import android.app.AlertDialog;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -15,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class MainActivity extends AppCompatActivity {
 
-	SCeltaViewModel miJuego;
+    SCeltaViewModel miJuego;
     public final String LOG_KEY = "MiW";
 
     public void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
      * Se ejecuta al pulsar una ficha
      * Las coordenadas (i, j) se obtienen a partir del nombre del recurso, ya que el botón
      * tiene un identificador en formato pXY, donde X es la fila e Y la columna
+     *
      * @param v Vista de la ficha pulsada
      */
     public void fichaPulsada(@NotNull View v) {
@@ -76,15 +79,32 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.opcReiniciarPartida:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder
+                        .setTitle(R.string.txtDialogoReiniciarTitulo)
+                        .setMessage(R.string.txtDialogoReiniciarPregunta)
+                        .setPositiveButton(
+                                getString(R.string.txtDialogoReiniciarAfirmativo),
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        miJuego.reiniciar();
+                                        mostrarTablero();
+                                    }
+                                }
+                        )
+                        .setNegativeButton(
+                                getString(R.string.txtDialogoReiniciarNegativo), null)
+                        .show();
+                return true;
             case R.id.opcAjustes:
                 startActivity(new Intent(this, SCeltaPrefs.class));
                 return true;
             case R.id.opcAcercaDe:
                 startActivity(new Intent(this, AcercaDe.class));
                 return true;
-
             // TODO!!! resto opciones
-
             default:
                 Snackbar.make(
                         findViewById(android.R.id.content),
