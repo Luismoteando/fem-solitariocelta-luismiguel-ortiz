@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -32,11 +33,14 @@ public class MainActivity extends AppCompatActivity {
 
     private BufferedReader bufferedReader;
 
+    private TextView tvFichasRestantes;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         miJuego = ViewModelProviders.of(this).get(SCeltaViewModel.class);
+        tvFichasRestantes = findViewById(R.id.tvFichasRestantes);
         mostrarTablero();
     }
 
@@ -81,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                     button.setChecked(miJuego.obtenerFicha(i, j) == JuegoCelta.FICHA);
                 }
             }
+        tvFichasRestantes.setText(getString(R.string.default_fichas_restantes, miJuego.numeroFichas()));
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -12,6 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_status_bar" />
 
+    <TextView
+        android:id="@+id/tvFichasRestantes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/default_fichas_restantes" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

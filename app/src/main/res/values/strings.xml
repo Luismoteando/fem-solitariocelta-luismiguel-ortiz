@@ -34,6 +34,6 @@
     <string name="txtDialogoRecuperarPregunta">¿Desea sustituir la partida actual?</string>
     <string name="txtDialogoRecuperarAfirmativo">Sí</string>
     <string name="txtDialogoRecuperarNegativo">No</string>
-
+    <string name="default_fichas_restantes">Fichas restantes: %1$d</string>
 
 </resources>
