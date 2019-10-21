@@ -1,9 +1,7 @@
 package es.upm.miw.SolitarioCelta;
 
-import android.app.AlertDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -32,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private FileOutputStream fileOutputStream;
 
     private BufferedReader bufferedReader;
+
+    private StringBuffer sb;
 
     private TextView tvFichasRestantes;
 
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         mostrarTablero();
         if (miJuego.juegoTerminado()) {
             // TODO guardar puntuación
-            new AlertDialogFragment().show(getFragmentManager(), "ALERT_DIALOG");
+            new AlertDialogFragmentTerminar().show(getFragmentManager(), "ALERT_DIALOG");
         }
     }
 
@@ -97,23 +97,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.opcReiniciarPartida:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder
-                        .setTitle(R.string.txtDialogoReiniciarTitulo)
-                        .setMessage(R.string.txtDialogoReiniciarPregunta)
-                        .setPositiveButton(
-                                getString(R.string.txtDialogoReiniciarAfirmativo),
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        miJuego.reiniciar();
-                                        mostrarTablero();
-                                    }
-                                }
-                        )
-                        .setNegativeButton(
-                                getString(R.string.txtDialogoReiniciarNegativo), null)
-                        .show();
+                new AlertDialogFragmentReiniciar().show(getFragmentManager(), "ALERT_DIALOG");
                 return true;
             case R.id.opcGuardarPartida:
                 guardarPartida();
@@ -127,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.opcAcercaDe:
                 startActivity(new Intent(this, AcercaDe.class));
                 return true;
-            // TODO!!! resto opciones
             default:
                 Snackbar.make(
                         findViewById(android.R.id.content),
@@ -153,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void recuperarPartida() {
-        final StringBuffer sb = new StringBuffer();
+        this.sb = new StringBuffer();
         String line;
         try {
             bufferedReader = new BufferedReader(new InputStreamReader(openFileInput(PARTIDA_GUARDADA)));
@@ -163,31 +146,19 @@ public class MainActivity extends AppCompatActivity {
         try {
             line = bufferedReader.readLine();
             while (line != null) {
-                sb.append(line);
+                this.sb.append(line);
                 line = bufferedReader.readLine();
             }
-            if (!sb.toString().equals(miJuego.serializaTablero())) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder
-                        .setTitle(R.string.txtDialogoRecuperarTitulo)
-                        .setMessage(R.string.txtDialogoRecuperarPregunta)
-                        .setPositiveButton(
-                                getString(R.string.txtDialogoRecuperarAfirmativo),
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        miJuego.deserializaTablero(sb.toString());
-                                        mostrarTablero();
-                                    }
-                                }
-                        )
-                        .setNegativeButton(
-                                getString(R.string.txtDialogoRecuperarNegativo), null)
-                        .show();
+            if (!this.sb.toString().equals(miJuego.serializaTablero())) {
+                new AlertDialogFragmentRecuperar().show(getFragmentManager(), "ALERT_DIALOG");
             }
             bufferedReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public StringBuffer getSb() {
+        return sb;
     }
 }

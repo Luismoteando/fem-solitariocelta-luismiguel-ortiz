@@ -6,10 +6,10 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
-public class AlertDialogFragment extends DialogFragment {
-	@Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		final MainActivity main = (MainActivity) getActivity();
+public class AlertDialogFragmentTerminar extends DialogFragment {
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        final MainActivity main = (MainActivity) getActivity();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(main);
         builder
@@ -35,6 +35,6 @@ public class AlertDialogFragment extends DialogFragment {
                         }
                 );
 
-		return builder.create();
-	}
+        return builder.create();
+    }
 }
