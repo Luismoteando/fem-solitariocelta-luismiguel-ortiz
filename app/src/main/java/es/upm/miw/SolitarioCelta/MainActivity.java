@@ -3,7 +3,11 @@ package es.upm.miw.SolitarioCelta;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -20,11 +24,17 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import es.upm.miw.SolitarioCelta.models.RepositorioResultados;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String PARTIDA_GUARDADA = "partida.txt";
+
     SCeltaViewModel miJuego;
+
     public final String LOG_KEY = "MiW";
 
     private FileOutputStream fileOutputStream;
@@ -33,14 +43,20 @@ public class MainActivity extends AppCompatActivity {
 
     private StringBuffer sb;
 
-    private TextView tvFichasRestantes;
+    private TextView barraEstado;
+
+    private RepositorioResultados repositorioResultados;
+
+    private SharedPreferences settings;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         miJuego = ViewModelProviders.of(this).get(SCeltaViewModel.class);
-        tvFichasRestantes = findViewById(R.id.tvFichasRestantes);
+        barraEstado = findViewById(R.id.barraEstado);
+        repositorioResultados = new RepositorioResultados(this);
+        settings = PreferenceManager.getDefaultSharedPreferences(this);
         mostrarTablero();
     }
 
@@ -51,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param v Vista de la ficha pulsada
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void fichaPulsada(@NotNull View v) {
         String resourceName = getResources().getResourceEntryName(v.getId());
         int i = resourceName.charAt(1) - '0';   // fila
@@ -62,10 +79,15 @@ public class MainActivity extends AppCompatActivity {
 
         mostrarTablero();
         if (miJuego.juegoTerminado()) {
-            // TODO guardar puntuación
             new AlertDialogFragmentTerminar().show(getFragmentManager(), "ALERT_DIALOG");
+            repositorioResultados.add(
+                    getJugador(),
+                    LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
+                    miJuego.numeroFichas()
+            );
         }
     }
+
 
     /**
      * Visualiza el tablero
@@ -85,13 +107,17 @@ public class MainActivity extends AppCompatActivity {
                     button.setChecked(miJuego.obtenerFicha(i, j) == JuegoCelta.FICHA);
                 }
             }
-        tvFichasRestantes.setText(getString(R.string.default_fichas_restantes, miJuego.numeroFichas()));
+        barraEstado.setText(getString(R.string.default_barra_estado, miJuego.numeroFichas()));
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.opciones_menu, menu);
         return true;
+    }
+
+    private String getJugador() {
+        return settings.getString(getString(R.string.key_jugador_setting), getString(R.string.default_jugador_setting));
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -104,6 +130,9 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.opcRecuperarPartida:
                 recuperarPartida();
+                return true;
+            case R.id.opcMejoresResultados:
+                startActivity(new Intent(this, SCeltaResultados.class));
                 return true;
             case R.id.opcAjustes:
                 startActivity(new Intent(this, SCeltaPrefs.class));

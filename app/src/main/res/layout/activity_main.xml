@@ -10,13 +10,8 @@
     <TextView
         android:id="@+id/barraEstado"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_status_bar" />
-
-    <TextView
-        android:id="@+id/tvFichasRestantes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/default_fichas_restantes" />
+        android:layout_height="@dimen/height_status_bar"
+        android:text="@string/default_barra_estado" />
 
     <RelativeLayout
         android:layout_width="match_parent"
