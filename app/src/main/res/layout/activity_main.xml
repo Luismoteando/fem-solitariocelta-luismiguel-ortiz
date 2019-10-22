@@ -7,11 +7,25 @@
     tools:context=".MainActivity"
     tools:ignore="RtlHardcoded">
 
-    <TextView
-        android:id="@+id/barraEstado"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_status_bar"
-        android:text="@string/default_barra_estado" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/barraEstado"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/height_status_bar"
+            android:layout_weight="0.5"
+            android:text="@string/default_barra_estado" />
+
+        <Chronometer
+            android:id="@+id/chronometer"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:gravity="right" />
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

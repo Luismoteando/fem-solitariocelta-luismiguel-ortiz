@@ -3,7 +3,6 @@ package es.upm.miw.SolitarioCelta.models;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -21,7 +20,8 @@ public class RepositorioResultados extends SQLiteOpenHelper {
                     TablaResultado._ID + " INTEGER PRIMARY KEY," +
                     TablaResultado.COL_NAME_JUGADOR + " TEXT," +
                     TablaResultado.COL_NAME_FECHA + " TEXT," +
-                    TablaResultado.COL_NAME_FICHAS + " INT)";
+                    TablaResultado.COL_NAME_FICHAS + " INT," +
+                    TablaResultado.COL_NAME_CHRONOTIME + " TEXT)";
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + TablaResultado.TABLE_NAME;
 
@@ -42,18 +42,14 @@ public class RepositorioResultados extends SQLiteOpenHelper {
         onUpgrade(db, oldVersion, newVersion);
     }
 
-    public long count() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        return DatabaseUtils.queryNumEntries(db, TablaResultado.TABLE_NAME);
-    }
-
-    public long add(String jugador, String fecha, int fichas) {
+    public long add(String jugador, String fecha, int fichas, String chronoTime) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(TablaResultado.COL_NAME_JUGADOR, jugador);
         values.put(TablaResultado.COL_NAME_FECHA, fecha);
         values.put(TablaResultado.COL_NAME_FICHAS, fichas);
+        values.put(TablaResultado.COL_NAME_CHRONOTIME, chronoTime);
 
         return db.insert(TablaResultado.TABLE_NAME, null, values);
     }
@@ -67,7 +63,8 @@ public class RepositorioResultados extends SQLiteOpenHelper {
             resultados.add(new Resultado(
                     cursor.getString(cursor.getColumnIndex(TablaResultado.COL_NAME_JUGADOR)),
                     cursor.getString(cursor.getColumnIndex(TablaResultado.COL_NAME_FECHA)),
-                    cursor.getInt(cursor.getColumnIndex(TablaResultado.COL_NAME_FICHAS))
+                    cursor.getInt(cursor.getColumnIndex(TablaResultado.COL_NAME_FICHAS)),
+                    cursor.getString(cursor.getColumnIndex(TablaResultado.COL_NAME_CHRONOTIME))
             ));
         }
         cursor.close();

@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.SystemClock;
 
 public class AlertDialogFragmentReiniciar extends DialogFragment {
     @Override
@@ -22,6 +23,8 @@ public class AlertDialogFragmentReiniciar extends DialogFragment {
                             public void onClick(DialogInterface dialog, int which) {
                                 main.miJuego.reiniciar();
                                 main.mostrarTablero();
+                                main.getChronometer().setBase(SystemClock.elapsedRealtime());
+                                main.getChronometer().start();
                             }
                         }
                 )

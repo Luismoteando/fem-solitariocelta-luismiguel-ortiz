@@ -38,6 +38,7 @@
     <string name="default_jugador_resultado">%s</string>
     <string name="default_fecha_resultado">Fecha: %s</string>
     <string name="default_fichas_resultado">Fichas restantes: %d</string>
+    <string name="default_chrono_resultado">Marca de tiempo: %s</string>
     <string name="key_jugador_setting">jugador_setting</string>
     <string name="default_jugador_setting">Invitado</string>
     <string name="txtBorrarClasificacion">Borrar clasificación</string>

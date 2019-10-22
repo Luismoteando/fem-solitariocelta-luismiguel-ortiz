@@ -13,5 +13,6 @@ public final class ResultadoContract {
         static final String COL_NAME_JUGADOR = "jugador";
         static final String COL_NAME_FECHA = "fecha";
         static final String COL_NAME_FICHAS = "fichas";
+        static final String COL_NAME_CHRONOTIME = "chronotime";
     }
 }

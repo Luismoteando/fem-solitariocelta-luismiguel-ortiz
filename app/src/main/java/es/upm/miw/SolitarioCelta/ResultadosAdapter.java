@@ -53,6 +53,11 @@ public class ResultadosAdapter extends ArrayAdapter {
                 getContext().getResources().getString(
                         R.string.default_fichas_resultado,
                         resultados.get(position).getFichas()));
+        TextView tvItem4 = linearLayout.findViewById(R.id.tvChronoResultado);
+        tvItem4.setText(
+                getContext().getResources().getString(
+                        R.string.default_chrono_resultado,
+                        resultados.get(position).getChronoTime()));
         return linearLayout;
     }
 }

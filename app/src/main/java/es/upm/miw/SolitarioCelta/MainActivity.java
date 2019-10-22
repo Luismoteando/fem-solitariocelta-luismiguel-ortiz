@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Chronometer;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -24,19 +26,19 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Locale;
 
 import es.upm.miw.SolitarioCelta.models.RepositorioResultados;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String PARTIDA_GUARDADA = "partida.txt";
-
-    SCeltaViewModel miJuego;
-
     public final String LOG_KEY = "MiW";
-
+    SCeltaViewModel miJuego;
     private FileOutputStream fileOutputStream;
 
     private BufferedReader bufferedReader;
@@ -49,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences settings;
 
+    private Chronometer chronometer;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -57,7 +61,18 @@ public class MainActivity extends AppCompatActivity {
         barraEstado = findViewById(R.id.barraEstado);
         repositorioResultados = new RepositorioResultados(this);
         settings = PreferenceManager.getDefaultSharedPreferences(this);
+        chronometer = findViewById(R.id.chronometer);
+        if (savedInstanceState != null) {
+            chronometer.setBase(savedInstanceState.getLong("chronoTime"));
+        }
+        chronometer.start();
         mostrarTablero();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putLong("chronoTime", chronometer.getBase());
     }
 
     /**
@@ -79,11 +94,14 @@ public class MainActivity extends AppCompatActivity {
 
         mostrarTablero();
         if (miJuego.juegoTerminado()) {
+            chronometer.stop();
             new AlertDialogFragmentTerminar().show(getFragmentManager(), "ALERT_DIALOG");
             repositorioResultados.add(
                     getJugador(),
                     LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
-                    miJuego.numeroFichas()
+                    miJuego.numeroFichas(),
+                    new SimpleDateFormat("mm:ss", Locale.US)
+                            .format(new Date(SystemClock.elapsedRealtime() - chronometer.getBase()))
             );
         }
     }
@@ -189,5 +207,9 @@ public class MainActivity extends AppCompatActivity {
 
     public StringBuffer getSb() {
         return sb;
+    }
+
+    public Chronometer getChronometer() {
+        return chronometer;
     }
 }

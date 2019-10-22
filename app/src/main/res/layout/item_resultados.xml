@@ -26,4 +26,10 @@
         android:layout_weight="1"
         android:text="@string/default_fichas_resultado" />
 
+    <TextView
+        android:id="@+id/tvChronoResultado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/default_chrono_resultado" />
 </LinearLayout>

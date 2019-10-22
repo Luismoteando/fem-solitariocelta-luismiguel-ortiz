@@ -21,11 +21,13 @@ public class Resultado implements Parcelable {
     private String jugador;
     private String fecha;
     private int fichas;
+    private String chronoTime;
 
-    public Resultado(String jugador, String fecha, int fichas) {
+    public Resultado(String jugador, String fecha, int fichas, String chronoTime) {
         this.jugador = jugador;
         this.fecha = fecha;
         this.fichas = fichas;
+        this.chronoTime = chronoTime;
     }
 
     protected Resultado(Parcel in) {
@@ -33,6 +35,7 @@ public class Resultado implements Parcelable {
         jugador = in.readString();
         fecha = in.readString();
         fichas = in.readInt();
+        chronoTime = in.readString();
     }
 
     public int getId() {
@@ -51,6 +54,10 @@ public class Resultado implements Parcelable {
         return fichas;
     }
 
+    public String getChronoTime() {
+        return chronoTime;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -62,5 +69,6 @@ public class Resultado implements Parcelable {
         dest.writeString(jugador);
         dest.writeString(fecha);
         dest.writeInt(fichas);
+        dest.writeString(chronoTime);
     }
 }
