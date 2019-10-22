@@ -1,4 +1,4 @@
-package es.upm.miw.SolitarioCelta.models;
+package es.upm.miw.solitarioCelta.models;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-import static es.upm.miw.SolitarioCelta.models.ResultadoContract.TablaResultado;
+import static es.upm.miw.solitarioCelta.models.ResultadoContract.TablaResultado;
 
 public class RepositorioResultados extends SQLiteOpenHelper {
 

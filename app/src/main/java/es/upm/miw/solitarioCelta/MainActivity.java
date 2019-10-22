@@ -1,4 +1,4 @@
-package es.upm.miw.SolitarioCelta;
+package es.upm.miw.solitarioCelta;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -32,7 +32,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
 
-import es.upm.miw.SolitarioCelta.models.RepositorioResultados;
+import es.upm.miw.solitarioCelta.models.RepositorioResultados;
 
 public class MainActivity extends AppCompatActivity {
 

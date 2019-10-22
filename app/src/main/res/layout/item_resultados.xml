@@ -1,35 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/tvJugadorResultado"
+    <data>
+
+        <variable
+            name="resultado"
+            type="es.upm.miw.solitarioCelta.models.Resultado" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/default_jugador_resultado"
-        android:textSize="24sp" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvFechaResultado"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/default_fecha_resultado" />
+        <TextView
+            android:id="@+id/tvJugadorResultado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@{resultado.jugador}"
+            android:textSize="24sp" />
 
-    <TextView
-        android:id="@+id/tvFichasResultado"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/default_fichas_resultado" />
+        <TextView
+            android:id="@+id/tvFechaResultado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text='@{"Fecha: " + resultado.fecha}' />
 
-    <TextView
-        android:id="@+id/tvChronoResultado"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/default_chrono_resultado" />
-</LinearLayout>
+        <TextView
+            android:id="@+id/tvFichasResultado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text='@{"Fichas restantes: " + String.valueOf(resultado.fichas)}' />
+
+        <TextView
+            android:id="@+id/tvChronoResultado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text='@{"Marca de tiempo: " + resultado.chronoTime}' />
+    </LinearLayout>
+</layout>

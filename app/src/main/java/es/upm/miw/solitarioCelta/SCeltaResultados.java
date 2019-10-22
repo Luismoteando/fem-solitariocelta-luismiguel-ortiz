@@ -1,4 +1,4 @@
-package es.upm.miw.SolitarioCelta;
+package es.upm.miw.solitarioCelta;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -7,7 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-import es.upm.miw.SolitarioCelta.models.RepositorioResultados;
+import es.upm.miw.solitarioCelta.models.RepositorioResultados;
 
 public class SCeltaResultados extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package es.upm.miw.SolitarioCelta;
+package es.upm.miw.solitarioCelta;
 
 class JuegoCelta {
 
@@ -85,8 +85,7 @@ class JuegoCelta {
                 || (i1 == i2 && Math.abs(j2 - j1) == 2)) {
             iSaltada = (i1 + i2) / 2;
             jSaltada = (j1 + j2) / 2;
-            if (tablero[iSaltada][jSaltada] == FICHA)
-                return true;
+			return tablero[iSaltada][jSaltada] == FICHA;
         }
 
         return false;
