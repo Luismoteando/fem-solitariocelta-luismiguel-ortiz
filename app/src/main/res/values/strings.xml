@@ -43,5 +43,9 @@
     <string name="default_jugador_setting">Invitado</string>
     <string name="txtBorrarClasificacion">Borrar clasificación</string>
     <string name="txtClasificacion">Clasificación</string>
+    <string name="txtDialogoBorrarTitulo">Borrar clasificación</string>
+    <string name="txtDialogoBorrarPregunta">¿Está seguro de que quiere borrar la clasificación?</string>
+    <string name="txtDialogoBorrarAfirmativo">Sí</string>
+    <string name="txtDialogoBorrarNegativo">No</string>
 
 </resources>

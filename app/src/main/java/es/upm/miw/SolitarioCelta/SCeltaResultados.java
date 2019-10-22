@@ -11,16 +11,19 @@ import es.upm.miw.SolitarioCelta.models.RepositorioResultados;
 
 public class SCeltaResultados extends AppCompatActivity {
 
-    private ListView lvResultados;
+    ListView lvResultados;
 
-    private RepositorioResultados repositorioResultados;
+    ResultadosAdapter resultadosAdapter;
+
+    RepositorioResultados repositorioResultados;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.resultados);
         repositorioResultados = new RepositorioResultados(this);
         lvResultados = findViewById(R.id.lvResultados);
-        lvResultados.setAdapter(new ResultadosAdapter(this, R.layout.item_resultados, repositorioResultados.readAll()));
+        resultadosAdapter = new ResultadosAdapter(this, R.layout.item_resultados, repositorioResultados.readAll());
+        lvResultados.setAdapter(resultadosAdapter);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -32,8 +35,7 @@ public class SCeltaResultados extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.opcBorrarClasificacion:
-                repositorioResultados.deleteAll();
-                lvResultados.setAdapter(new ResultadosAdapter(this, R.layout.item_resultados, repositorioResultados.readAll()));
+                new AlertDialogFragmentBorrar().show(getFragmentManager(), "ALERT_DIALOG");
                 return true;
             default:
                 Snackbar.make(
