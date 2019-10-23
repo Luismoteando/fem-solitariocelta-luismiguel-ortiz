@@ -1,10 +1,13 @@
-package es.upm.miw.solitarioCelta;
+package es.upm.miw.solitarioCelta.views.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+
+import es.upm.miw.solitarioCelta.R;
+import es.upm.miw.solitarioCelta.views.SCeltaResultados;
 
 public class AlertDialogFragmentBorrar extends DialogFragment {
     @Override

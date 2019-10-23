@@ -47,5 +47,6 @@
     <string name="txtDialogoBorrarPregunta">¿Está seguro de que quiere borrar la clasificación?</string>
     <string name="txtDialogoBorrarAfirmativo">Sí</string>
     <string name="txtDialogoBorrarNegativo">No</string>
+    <string name="txtPartidaGuardadaException">No hay ninguna partida guardada.</string>
 
 </resources>

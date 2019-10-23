@@ -2,6 +2,8 @@ package es.upm.miw.solitarioCelta;
 
 import android.arch.lifecycle.ViewModel;
 
+import es.upm.miw.solitarioCelta.models.JuegoCelta;
+
 public class SCeltaViewModel extends ViewModel {
 
     // This ViewModel class will hold all of the data associated with the screen.

@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="es.upm.miw.solitarioCelta.AcercaDe"
+            android:name="es.upm.miw.solitarioCelta.views.AcercaDe"
             android:label="@string/aboutText"
             android:theme="@android:style/Theme.Material.Dialog.MinWidth">
             <intent-filter>
@@ -37,7 +37,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="es.upm.miw.solitarioCelta.SCeltaResultados">
+        <activity android:name="es.upm.miw.solitarioCelta.views.SCeltaResultados">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

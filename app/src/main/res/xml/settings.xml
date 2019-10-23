@@ -4,8 +4,8 @@
         <EditTextPreference
             android:defaultValue="@string/default_jugador_setting"
             android:key="@string/key_jugador_setting"
-            android:title="@string/prefTituloNombreJugador"
-            android:summary="@string/prefTextoNombreJugador" />
+            android:summary="@string/prefTextoNombreJugador"
+            android:title="@string/prefTituloNombreJugador" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/prefTituloCategoria2">

@@ -1,4 +1,4 @@
-package es.upm.miw.solitarioCelta;
+package es.upm.miw.solitarioCelta.views;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -16,13 +16,10 @@ import es.upm.miw.solitarioCelta.models.Resultado;
 
 public class ResultadosAdapter extends ArrayAdapter {
 
-    private Context context;
-
-    private int idLayout;
-
-    private List<Resultado> resultados;
-
     private static LayoutInflater layoutInflater;
+    private Context context;
+    private int idLayout;
+    private List<Resultado> resultados;
 
     public ResultadosAdapter(@NonNull Context context, int idLayout, @NonNull List<Resultado> resultados) {
         super(context, idLayout, resultados);

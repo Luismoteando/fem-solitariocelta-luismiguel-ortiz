@@ -32,16 +32,19 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
 
+import es.upm.miw.solitarioCelta.models.JuegoCelta;
 import es.upm.miw.solitarioCelta.models.RepositorioResultados;
+import es.upm.miw.solitarioCelta.views.AcercaDe;
+import es.upm.miw.solitarioCelta.views.SCeltaResultados;
+import es.upm.miw.solitarioCelta.views.dialogs.AlertDialogFragmentRecuperar;
+import es.upm.miw.solitarioCelta.views.dialogs.AlertDialogFragmentReiniciar;
+import es.upm.miw.solitarioCelta.views.dialogs.AlertDialogFragmentTerminar;
 
 public class MainActivity extends AppCompatActivity {
 
-    SCeltaViewModel miJuego;
-
     public final String PARTIDA_GUARDADA = "partida.txt";
-
     public final String LOG_KEY = "MiW";
-
+    public SCeltaViewModel miJuego;
     private StringBuffer sb;
 
     private Chronometer chronometer;
@@ -186,15 +189,23 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         try {
-            line = bufferedReader.readLine();
-            while (line != null) {
-                this.sb.append(line);
+            if (bufferedReader != null) {
                 line = bufferedReader.readLine();
+                while (line != null) {
+                    this.sb.append(line);
+                    line = bufferedReader.readLine();
+                    if (!this.sb.toString().equals(miJuego.serializaTablero())) {
+                        new AlertDialogFragmentRecuperar().show(getFragmentManager(), "ALERT_DIALOG");
+                    }
+                }
+                bufferedReader.close();
+            } else {
+                Snackbar.make(
+                        findViewById(android.R.id.content),
+                        getString(R.string.txtPartidaGuardadaException),
+                        Snackbar.LENGTH_LONG
+                ).show();
             }
-            if (!this.sb.toString().equals(miJuego.serializaTablero())) {
-                new AlertDialogFragmentRecuperar().show(getFragmentManager(), "ALERT_DIALOG");
-            }
-            bufferedReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

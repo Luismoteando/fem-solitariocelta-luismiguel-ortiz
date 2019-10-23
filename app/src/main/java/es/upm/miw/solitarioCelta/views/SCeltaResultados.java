@@ -1,4 +1,4 @@
-package es.upm.miw.solitarioCelta;
+package es.upm.miw.solitarioCelta.views;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -7,15 +7,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import es.upm.miw.solitarioCelta.R;
 import es.upm.miw.solitarioCelta.models.RepositorioResultados;
+import es.upm.miw.solitarioCelta.views.dialogs.AlertDialogFragmentBorrar;
 
 public class SCeltaResultados extends AppCompatActivity {
 
-    ListView lvResultados;
+    public ListView lvResultados;
 
-    ResultadosAdapter resultadosAdapter;
+    public ResultadosAdapter resultadosAdapter;
 
-    RepositorioResultados repositorioResultados;
+    public RepositorioResultados repositorioResultados;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,16 +35,15 @@ public class SCeltaResultados extends AppCompatActivity {
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.opcBorrarClasificacion:
-                new AlertDialogFragmentBorrar().show(getFragmentManager(), "ALERT_DIALOG");
-                return true;
-            default:
-                Snackbar.make(
-                        findViewById(android.R.id.content),
-                        getString(R.string.txtSinImplementar),
-                        Snackbar.LENGTH_LONG
-                ).show();
+        if (item.getItemId() == R.id.opcBorrarClasificacion) {
+            new AlertDialogFragmentBorrar().show(getFragmentManager(), "ALERT_DIALOG");
+            return true;
+        } else {
+            Snackbar.make(
+                    findViewById(android.R.id.content),
+                    getString(R.string.txtSinImplementar),
+                    Snackbar.LENGTH_LONG
+            ).show();
         }
         return true;
     }
