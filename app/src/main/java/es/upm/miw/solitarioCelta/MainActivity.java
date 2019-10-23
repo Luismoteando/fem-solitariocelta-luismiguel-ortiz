@@ -36,20 +36,13 @@ import es.upm.miw.solitarioCelta.models.RepositorioResultados;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String PARTIDA_GUARDADA = "partida.txt";
-    public final String LOG_KEY = "MiW";
     SCeltaViewModel miJuego;
-    private FileOutputStream fileOutputStream;
 
-    private BufferedReader bufferedReader;
+    public final String PARTIDA_GUARDADA = "partida.txt";
+
+    public final String LOG_KEY = "MiW";
 
     private StringBuffer sb;
-
-    private TextView barraEstado;
-
-    private RepositorioResultados repositorioResultados;
-
-    private SharedPreferences settings;
 
     private Chronometer chronometer;
 
@@ -58,9 +51,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         miJuego = ViewModelProviders.of(this).get(SCeltaViewModel.class);
-        barraEstado = findViewById(R.id.barraEstado);
-        repositorioResultados = new RepositorioResultados(this);
-        settings = PreferenceManager.getDefaultSharedPreferences(this);
         chronometer = findViewById(R.id.chronometer);
         if (savedInstanceState != null) {
             chronometer.setBase(savedInstanceState.getLong("chronoTime"));
@@ -96,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         if (miJuego.juegoTerminado()) {
             chronometer.stop();
             new AlertDialogFragmentTerminar().show(getFragmentManager(), "ALERT_DIALOG");
+            RepositorioResultados repositorioResultados = new RepositorioResultados(this);
             repositorioResultados.add(
                     getJugador(),
                     LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
@@ -125,7 +116,8 @@ public class MainActivity extends AppCompatActivity {
                     button.setChecked(miJuego.obtenerFicha(i, j) == JuegoCelta.FICHA);
                 }
             }
-        barraEstado.setText(getString(R.string.default_barra_estado, miJuego.numeroFichas()));
+        ((TextView) findViewById(R.id.barraEstado)).setText(
+                getString(R.string.default_barra_estado, miJuego.numeroFichas()));
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -135,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String getJugador() {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
         return settings.getString(getString(R.string.key_jugador_setting), getString(R.string.default_jugador_setting));
     }
 
@@ -169,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void guardarPartida() {
+        FileOutputStream fileOutputStream = null;
         try {
             fileOutputStream = openFileOutput(PARTIDA_GUARDADA, Context.MODE_PRIVATE);
         } catch (FileNotFoundException e) {
@@ -183,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void recuperarPartida() {
+        BufferedReader bufferedReader = null;
         this.sb = new StringBuffer();
         String line;
         try {
